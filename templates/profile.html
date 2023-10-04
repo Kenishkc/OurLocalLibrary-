@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% block title %}Profile{% endblock title %}
+{% block body %}
+<h1>User Profile</h1>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-4 text-center">
+            <!-- Profile Picture -->
+            {% if profile.profile_picture %}
+            <img src="{{ profile.profile_picture.url }}" alt="Profile Picture" class="profile-img">
+            {% endif %}
+        </div>
+        <div class="col-md-8">
+            <!-- User Information -->
+            <div class="profile-info">
+                <h2 class="mb-4">{{ profile.user.username }}</h2>
+                <p><strong>Name:</strong> {{ profile.firstname }} {{ profile.lastname }}</p>
+                <p><strong>Email:</strong> {{ profile.email }}</p>
+                <p><strong>Bio:</strong> {{ profile.bio }}</p>
+                <p><strong>Mobile Number:</strong> {{ profile.mobile_number }}</p>
+                <p><strong>Gender:</strong> 
+                    {% if profile.gender == 'M' %} Male {% endif %}
+                    {% if profile.gender == 'F'%} Female{% else %}
+                    Other
+                    {% endif %}
+                    </p>
+                <p><strong>Address:</strong> {{ profile.address }}</p>
+            </div>
+            <a href="{% url 'editprofile' %}" class="btn btn-primary btn-sm mt-3">
+                <i class="bi bi-pencil"></i> Edit Profile
+            </a>      
+           </div>
+    </div>
+
+    <h2>Your Borrowed Books</h2>
+    <div class="row">
+        {% for borrowed_book in borrowbook %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="{{ borrowed_book.book_instance.book.image.url }}" alt="Book Cover" style="height: 200px;" class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ borrowed_book.book_instance.book.title }}</h5>
+                        <p class="card-text">Due Date: {{ borrowed_book.due_date }}</p>
+                        <!-- You can add more book details here -->
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <p>You haven't borrowed any books yet.</p>
+        {% endfor %}
+    </div>
+
+
+</div>
+{% if messages %}
+<div class="messages">
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }}">
+        {{ message }}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+<style>
+    .profile-img {
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+        border-radius: 50%;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+    .profile-info {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+    h2 {
+        color: #343a40;
+    }
+    p.lead {
+        font-size: 18px;
+        margin-bottom: 20px;
+    }
+    ul.list-unstyled li {
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
+</style>
+
+
+{% endblock body %}
+
