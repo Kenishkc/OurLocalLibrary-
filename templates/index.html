@@ -30,6 +30,14 @@
     </button>
   </div>
 <div class="container mt-5">
+  {% if messages %}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    {% for message in messages %}
+    {{ message }}
+    {% endfor %}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+{% endif %} 
     <div class="jumbotron text-center">
         <h1 class="display-4">📚 Welcome to Our Local Library! 📚</h1>
         <p class="lead">Explore a World of Knowledge and Imagination</p>

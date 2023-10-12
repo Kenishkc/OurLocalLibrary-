@@ -51,9 +51,13 @@
                         <td>{{ book_instance.due_back }}</td>
                         
                         <td>
+                            {% if book_instance.status == 'a' %}
                             <button type="button" class="btn btn-primary borrow-button" data-toggle="collapse" data-target="#collapseExample{{ book_instance.id }}">
                                 Borrow Now
                             </button>
+                            {% else %}
+                            <p> Not Available</p>
+                            {% endif%}
                         
                             <!-- Collapsible form -->
                             <div class="collapse" id="collapseExample{{ book_instance.id }}">
